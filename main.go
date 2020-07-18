@@ -18,14 +18,18 @@ func main() {
 			},
 		},
 		Action: func(c *cli.Context) error {
-			name := "Nefertiti"
+			firstname := ""
+			midname := ""
+			lastname := ""
 			if c.NArg() > 0 {
-				name = c.Args().Get(0)
+				firstname = c.Args().Get(0)
+				midname = c.Args().Get(1)
+				lastname = c.Args().Get(2)
 			}
 			if c.String("lang") == "spanish" {
-				fmt.Println("Hola", name)
+				fmt.Println("Hola", firstname, midname, lastname)
 			} else {
-				fmt.Println("Hello", name)
+				fmt.Println("Hello", firstname, midname, lastname)
 			}
 			return nil
 		},
