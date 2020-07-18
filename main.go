@@ -9,27 +9,26 @@ import (
 )
 
 func main() {
+	var language string
+
 	app := &cli.App{
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:  "lang",
-				Value: "english",
-				Usage: "language for the greeting",
+				Name:        "lang",
+				Value:       "english",
+				Usage:       "language for the greeting",
+				Destination: &language,
 			},
 		},
 		Action: func(c *cli.Context) error {
-			firstname := ""
-			midname := ""
-			lastname := ""
+			name := "someone"
 			if c.NArg() > 0 {
-				firstname = c.Args().Get(0)
-				midname = c.Args().Get(1)
-				lastname = c.Args().Get(2)
+				name = c.Args().Get(0)
 			}
-			if c.String("lang") == "spanish" {
-				fmt.Println("Hola", firstname, midname, lastname)
+			if language == "spanish" {
+				fmt.Println("Hola", name)
 			} else {
-				fmt.Println("Hello", firstname, midname, lastname)
+				fmt.Println("Hello", name)
 			}
 			return nil
 		},
