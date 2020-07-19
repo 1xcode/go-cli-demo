@@ -19,6 +19,10 @@ func main() {
 				Usage:       "language for the greeting",
 				Destination: &language,
 			},
+			&cli.StringFlag{
+				Name:  "config, c",
+				Usage: "Load configuration from `FILE`",
+			},
 		},
 		Action: func(c *cli.Context) error {
 			name := "someone"
