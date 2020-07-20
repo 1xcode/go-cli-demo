@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sort"
 
 	"github.com/urfave/cli/v2"
 )
@@ -12,28 +13,53 @@ func main() {
 	app := &cli.App{
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:  "lang",
-				Value: "english",
-				Usage: "language for the greeting",
+				Name:    "lang, l",
+				Value:   "english",
+				Aliases: []string{"l"},
+				Usage:   "Language for the greeting",
+				// EnvVars:  []string{"LEGACY_COMPAT_LANG", "APP_LANG", "LANG"},
+				FilePath: "./lang.txt",
+			},
+			&cli.StringFlag{
+				Name:  "config, c",
+				Usage: "Load configuration from `FILE`",
+			},
+		},
+		Commands: []*cli.Command{
+			{
+				Name:    "complete",
+				Aliases: []string{"c"},
+				Usage:   "complete a task on the list",
+				Action: func(c *cli.Context) error {
+					return nil
+				},
+			},
+			{
+				Name:    "add",
+				Aliases: []string{"a"},
+				Usage:   "add a task to the list",
+				Action: func(c *cli.Context) error {
+					return nil
+				},
 			},
 		},
 		Action: func(c *cli.Context) error {
-			firstname := ""
-			midname := ""
-			lastname := ""
+			name := "someone"
 			if c.NArg() > 0 {
-				firstname = c.Args().Get(0)
-				midname = c.Args().Get(1)
-				lastname = c.Args().Get(2)
+				name = c.Args().Get(0)
 			}
+			fmt.Println(c.String("lang"))
 			if c.String("lang") == "spanish" {
-				fmt.Println("Hola", firstname, midname, lastname)
+				fmt.Println("Hola", name)
 			} else {
-				fmt.Println("Hello", firstname, midname, lastname)
+				fmt.Println("Hello", name)
 			}
 			return nil
 		},
 	}
+
+	sort.Sort(cli.FlagsByName(app.Flags))
+	sort.Sort(cli.CommandsByName(app.Commands))
 
 	err := app.Run(os.Args)
 	if err != nil {
