@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"sort"
@@ -12,9 +13,10 @@ func main() {
 	app := &cli.App{
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:  "lang, l",
-				Value: "english",
-				Usage: "Language for the greeting",
+				Name:    "lang, l",
+				Value:   "english",
+				Aliases: []string{"l"},
+				Usage:   "Language for the greeting",
 			},
 			&cli.StringFlag{
 				Name:  "config, c",
@@ -38,6 +40,18 @@ func main() {
 					return nil
 				},
 			},
+		},
+		Action: func(c *cli.Context) error {
+			name := "someone"
+			if c.NArg() > 0 {
+				name = c.Args().Get(0)
+			}
+			if c.String("lang") == "spanish" {
+				fmt.Println("Hola", name)
+			} else {
+				fmt.Println("Hello", name)
+			}
+			return nil
 		},
 	}
 
