@@ -19,6 +19,7 @@ func main() {
 				Usage:   "Language for the greeting",
 				// EnvVars:  []string{"LEGACY_COMPAT_LANG", "APP_LANG", "LANG"},
 				FilePath: "./lang.txt",
+				Required: false, // Requirments of this flag
 			},
 			&cli.StringFlag{
 				Name:  "config, c",
