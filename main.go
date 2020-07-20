@@ -17,6 +17,8 @@ func main() {
 				Value:   "english",
 				Aliases: []string{"l"},
 				Usage:   "Language for the greeting",
+				// EnvVars:  []string{"LEGACY_COMPAT_LANG", "APP_LANG", "LANG"},
+				FilePath: "./lang.txt",
 			},
 			&cli.StringFlag{
 				Name:  "config, c",
@@ -46,6 +48,7 @@ func main() {
 			if c.NArg() > 0 {
 				name = c.Args().Get(0)
 			}
+			fmt.Println(c.String("lang"))
 			if c.String("lang") == "spanish" {
 				fmt.Println("Hola", name)
 			} else {
