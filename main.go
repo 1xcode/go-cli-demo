@@ -25,6 +25,12 @@ func main() {
 				Name:  "config, c",
 				Usage: "Load configuration from `FILE`",
 			},
+			&cli.IntFlag{
+				Name:        "port",
+				Usage:       "Use a randomized port",
+				Value:       0,
+				DefaultText: "random",
+			},
 		},
 		Commands: []*cli.Command{
 			{
@@ -49,7 +55,6 @@ func main() {
 			if c.NArg() > 0 {
 				name = c.Args().Get(0)
 			}
-			fmt.Println(c.String("lang"))
 			if c.String("lang") == "spanish" {
 				fmt.Println("Hola", name)
 			} else {
